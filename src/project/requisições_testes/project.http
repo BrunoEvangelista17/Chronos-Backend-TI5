@@ -1,0 +1,37 @@
+### Criar projeto
+POST http://localhost:3000/project
+Content-Type: application/json
+
+{
+  "nome": "Chronos",
+  "descricao": "Sistema de gerenciamento ágil",
+  "data_inicio": "2025-05-01T00:00:00.000Z",
+  "data_fim": "2025-12-31T00:00:00.000Z",
+  "status": "ativo"
+}
+
+###
+
+### Listar todos os projetos
+GET http://localhost:3000/project
+
+###
+
+### Buscar projeto por ID
+GET http://localhost:3000/project/{{projectId}}
+
+###
+
+### Atualizar projeto
+PATCH http://localhost:3000/project/{{projectId}}
+Content-Type: application/json
+
+{
+  "descricao": "Sistema atualizado com novas funcionalidades",
+  "status": "em progresso"
+}
+
+###
+
+### Deletar projeto
+DELETE http://localhost:3000/project/{{projectId}}

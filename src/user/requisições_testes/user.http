@@ -19,7 +19,7 @@ GET http://localhost:3000/users
 GET http://localhost:3000/users/{{userId}}
 
 ### Atualizar usuário
-PATCH http://localhost:3000/users/{{userId}}
+PATCH http://localhost:3000/users/6812687a03f3a271c0b95dec
 Content-Type: application/json
 
 {

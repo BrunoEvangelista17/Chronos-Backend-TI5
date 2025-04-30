@@ -5,7 +5,6 @@ export type TaskDocument = Task & Document;
 
 @Schema()
 export class Task {
-  @Prop({ unique: true, required: true }) id: number;
   @Prop({ required: true }) titulo: string;
   @Prop({ required: false }) descricao: string;
   @Prop({ required: true, default: 'pending' }) status: string;

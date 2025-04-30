@@ -31,7 +31,21 @@ export class UserService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    return this.userModel.findByIdAndUpdate(id, updateUserDto, { new: true });
+    const updatedUser = await this.userModel.findByIdAndUpdate(
+      id,
+      updateUserDto,
+      { new: true },
+    );
+    if (!updatedUser) throw new NotFoundException('Usuário não encontrado');
+
+    // Atualizar o nome do usuário nos projetos onde ele aparece
+    await this.projectModel.updateMany(
+      { 'users.id': id },
+      { $set: { 'users.$[elem].nome': updatedUser.nome } },
+      { arrayFilters: [{ 'elem.id': id }] },
+    );
+
+    return updatedUser;
   }
 
   async remove(id: string) {

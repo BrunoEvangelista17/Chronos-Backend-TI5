@@ -1,14 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type RelacionamentoTarefaDocument = RelacionamentoTarefa & Document;
+export type RelacionamentoTaskDocument = RelacionamentoTask & Document;
 
 @Schema()
-export class RelacionamentoTarefa {
+export class RelacionamentoTask {
   @Prop({ unique: true, required: true }) id: number;
-  @Prop({ required: true }) tarefa_origem_id: number;
-  @Prop({ required: true }) tarefa_relacionada_id: number;
+  @Prop({ required: true }) task_origem_id: number;
+  @Prop({ required: true }) task_relacionada_id: number;
 }
 
-export const RelacionamentoTarefaSchema =
-  SchemaFactory.createForClass(RelacionamentoTarefa);
+export const RelacionamentoTaskSchema =
+  SchemaFactory.createForClass(RelacionamentoTask);

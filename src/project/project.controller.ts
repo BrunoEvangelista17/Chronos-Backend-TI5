@@ -27,16 +27,16 @@ export class ProjectController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.projectService.findOne(parseInt + id);
+    return this.projectService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateProjectDto: UpdateProjectDto) {
-    return this.projectService.update(parseInt + id, updateProjectDto);
+    return this.projectService.update(id, updateProjectDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.projectService.remove(parseInt + id);
+    return this.projectService.remove(id);
   }
 }

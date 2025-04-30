@@ -18,12 +18,12 @@ GET http://localhost:3000/project
 ###
 
 ### Buscar projeto por ID
-GET http://localhost:3000/project/{{projectId}}
+GET http://localhost:3000/project/6810d6ca94c434a8d673442c
 
 ###
 
 ### Atualizar projeto
-PATCH http://localhost:3000/project/{{projectId}}
+PATCH http://localhost:3000/project/6810d6ca94c434a8d673442c
 Content-Type: application/json
 
 {

@@ -1,0 +1,42 @@
+### Criar uma nova tarefa
+POST http://localhost:3000/tasks
+Content-Type: application/json
+
+{
+  "titulo": "Implementar autenticação",
+  "descricao": "Usar JWT para proteger rotas",
+  "status": "Pendente",
+  "data_inicio": "2025-04-29T00:00:00Z",
+  "data_limite": "2025-05-05T00:00:00Z",
+  "prioridade": "Alta",
+  "complexidade": 3,
+  "projeto_id": "644c7bfc6f5412abc1234567",
+  "criada_por_id": "644c7bfc6f5412abc1234568",
+  "aprovada_por_id": "644c7bfc6f5412abc1234569"
+}
+
+###
+
+### Buscar todas as tarefas
+GET http://localhost:3000/tasks
+
+###
+
+### Buscar uma tarefa por ID
+GET http://localhost:3000/tasks/{{task_id}}
+
+###
+
+### Atualizar uma tarefa
+PATCH http://localhost:3000/tasks/{{task_id}}
+Content-Type: application/json
+
+{
+  "status": "Concluída",
+  "data_conclusao": "2025-05-02T12:00:00Z"
+}
+
+###
+
+### Remover uma tarefa
+DELETE http://localhost:3000/tasks/{{task_id}}

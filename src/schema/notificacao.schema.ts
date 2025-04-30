@@ -10,7 +10,7 @@ export class Notificacao {
   @Prop({ required: true }) criada_em: Date;
   @Prop({ required: true }) criada_por_id: number;
   @Prop({ required: true }) tipo: string;
-  @Prop({ required: true }) tarefa_id: number;
+  @Prop({ required: true }) task_id: number;
   @Prop({ required: true }) project_id: number;
 }
 

@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "nome": "João da Silva",
-  "email": "joao@example.com",
+  "email": "AMADEUS@example.com",
   "senha_hash": "senhaSegura123",
   "foto_url": "https://example.com/foto.jpg",
   "papel": "Scrum Master",

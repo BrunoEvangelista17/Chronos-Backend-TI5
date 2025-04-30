@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Project, ProjectDocument } from 'src/schema/projeto.schema';
+import { Project } from 'src/schema/projeto.schema';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 
@@ -9,32 +9,37 @@ import { UpdateProjectDto } from './dto/update-project.dto';
 export class ProjectService {
   constructor(
     @InjectModel(Project.name)
-    private projectModel: Model<ProjectDocument>,
+    private readonly projectModel: Model<Project>,
   ) {}
 
-  async create(createProjectDto: CreateProjectDto): Promise<Project> {
-    const created = new this.projectModel(createProjectDto);
-    return created.save();
+  async create(createProjectDto: CreateProjectDto) {
+    const project = new this.projectModel(createProjectDto);
+    return await project.save();
   }
 
-  async findAll(): Promise<Project[]> {
-    return this.projectModel.find().exec();
+  async findAll() {
+    return this.projectModel.find();
   }
 
-  async findOne(id: string): Promise<Project> {
-    return this.projectModel.findById(id).exec();
+  async findOne(id: string) {
+    const project = await this.projectModel.findById(id);
+    if (!project) throw new NotFoundException('Projeto não encontrado');
+    return project;
   }
 
-  async update(
-    id: string,
-    updateProjectDto: UpdateProjectDto,
-  ): Promise<Project> {
-    return this.projectModel
-      .findByIdAndUpdate(id, updateProjectDto, { new: true })
-      .exec();
+  async update(id: string, updateProjectDto: UpdateProjectDto) {
+    const updated = await this.projectModel.findByIdAndUpdate(
+      id,
+      updateProjectDto,
+      { new: true },
+    );
+    if (!updated) throw new NotFoundException('Projeto não encontrado');
+    return updated;
   }
 
-  async remove(id: string): Promise<Project> {
-    return this.projectModel.findByIdAndDelete(id).exec();
+  async remove(id: string) {
+    const deleted = await this.projectModel.findByIdAndDelete(id);
+    if (!deleted) throw new NotFoundException('Projeto não encontrado');
+    return deleted;
   }
 }

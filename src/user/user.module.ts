@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -15,9 +15,10 @@ import { TaskModule } from 'src/task/task.module';
       },
     ]),
     ProjectModule,
-    TaskModule,
+    forwardRef(() => TaskModule),
   ],
   controllers: [UserController],
   providers: [UserService], // Remove ProjectModule, TaskModule
+  exports: [UserService],
 })
 export class UserModule {}

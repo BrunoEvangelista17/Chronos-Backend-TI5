@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  forwardRef,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -6,6 +11,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from 'src/schema/usuario.schema';
 import { Project } from 'src/schema/projeto.schema';
 import { Task } from 'src/schema/tarefa.schema';
+import { TaskService } from 'src/task/task.service';
 
 @Injectable()
 export class UserService {
@@ -13,6 +19,7 @@ export class UserService {
     @InjectModel(User.name) private userModel: Model<User>,
     @InjectModel(Project.name) private projectModel: Model<Project>,
     @InjectModel(Task.name) private taskModel: Model<Task>,
+    @Inject(forwardRef(() => TaskService)) private TaskService: TaskService, // Add UserService
   ) {}
 
   async create(createUserDto: CreateUserDto) {

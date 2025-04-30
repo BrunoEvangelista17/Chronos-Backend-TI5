@@ -3,24 +3,44 @@ import { Document, Types } from 'mongoose';
 
 export type TaskDocument = Task & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Task {
-  @Prop({ required: true }) titulo: string;
-  @Prop({ required: false }) descricao: string;
-  @Prop({ required: true, default: 'pending' }) status: string;
-  @Prop({ required: false }) data_inicio: Date;
-  @Prop({ required: false }) data_limite: Date;
-  @Prop({ required: false }) data_conclusao: Date;
-  @Prop({ required: true }) prioridade: string;
-  @Prop({ required: true }) complexidade: number;
+  @Prop({ required: true })
+  titulo: string;
+
+  @Prop()
+  descricao?: string;
+
+  @Prop({ required: true, default: 'pending' })
+  status: string; // Ex: pending, doing, done
+
+  @Prop()
+  dataInicio?: Date;
+
+  @Prop()
+  dataLimite?: Date;
+
+  @Prop()
+  dataConclusao?: Date;
+
+  @Prop({ required: true })
+  prioridade: string; // Ex: baixa, média, alta
+
+  @Prop({ required: true })
+  complexidade: number;
+
   @Prop({ type: Types.ObjectId, ref: 'Project', required: true })
-  projeto_id: Types.ObjectId;
+  projeto: Types.ObjectId;
 
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
-  criada_por_id: Types.ObjectId;
+  criadaPor: Types.ObjectId;
 
   @Prop({ type: Types.ObjectId, ref: 'User' })
-  aprovada_por_id: Types.ObjectId;
+  aprovadaPor?: Types.ObjectId;
+
+  // Caso deseje armazenar todos os usuários atribuídos diretamente na tarefa
+  @Prop([{ type: Types.ObjectId, ref: 'User' }])
+  atribuicoes?: Types.ObjectId[];
 }
 
 export const TaskSchema = SchemaFactory.createForClass(Task);

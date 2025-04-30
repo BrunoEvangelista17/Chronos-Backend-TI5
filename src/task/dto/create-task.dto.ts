@@ -1,10 +1,11 @@
 import {
   IsString,
   IsNotEmpty,
-  IsOptional,
-  IsDateString,
-  IsMongoId,
   IsNumber,
+  IsMongoId,
+  IsDateString,
+  IsOptional,
+  IsArray,
 } from 'class-validator';
 
 export class CreateTaskDto {
@@ -17,36 +18,35 @@ export class CreateTaskDto {
   descricao?: string;
 
   @IsString()
-  @IsOptional()
-  status?: string;
-
-  @IsDateString()
-  @IsOptional()
-  data_inicio?: Date;
-
-  @IsDateString()
-  @IsOptional()
-  data_limite?: Date;
-
-  @IsDateString()
-  @IsOptional()
-  data_conclusao?: Date;
-
-  @IsString()
-  @IsOptional()
-  prioridade?: string;
+  @IsNotEmpty()
+  prioridade: string;
 
   @IsNumber()
+  @IsNotEmpty()
+  complexidade: number;
+
+  @IsMongoId()
+  @IsNotEmpty()
+  projeto: string;
+
+  @IsMongoId()
+  @IsNotEmpty()
+  criadaPor: string;
+
+  @IsDateString()
   @IsOptional()
-  complexidade?: number;
+  dataInicio?: string;
 
-  @IsMongoId()
-  projeto_id: string;
-
-  @IsMongoId()
-  criada_por_id: string;
+  @IsDateString()
+  @IsOptional()
+  dataLimite?: string;
 
   @IsMongoId()
   @IsOptional()
-  aprovada_por_id?: string;
+  aprovadaPor?: string;
+
+  @IsArray()
+  @IsMongoId({ each: true })
+  @IsOptional()
+  atribuicoes?: string[];
 }

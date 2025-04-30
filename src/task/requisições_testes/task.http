@@ -3,16 +3,16 @@ POST http://localhost:3000/tasks
 Content-Type: application/json
 
 {
-  "titulo": "Implementar autenticação",
-  "descricao": "Usar JWT para proteger rotas",
-  "status": "Pendente",
-  "data_inicio": "2025-04-29T00:00:00Z",
-  "data_limite": "2025-05-05T00:00:00Z",
-  "prioridade": "Alta",
-  "complexidade": 3,
-  "projeto_id": "644c7bfc6f5412abc1234567",
-  "criada_por_id": "644c7bfc6f5412abc1234568",
-  "aprovada_por_id": "644c7bfc6f5412abc1234569"
+  "titulo": "Implement User Authentication",
+  "descricao": "Develop JWT-based authentication for user login",
+  "prioridade": "alta",
+  "complexidade": 8,
+  "projeto": "507f1f77bcf86cd799439011",
+  "criadaPor": "507f191e810c19729de860ea",
+  "dataInicio": "2025-05-01T09:00:00.000Z",
+  "dataLimite": "2025-05-15T17:00:00.000Z",
+  "aprovadaPor": "507f191e810c19729de860eb",
+  "atribuicoes": ["507f191e810c19729de860ec", "507f191e810c19729de860ed"]
 }
 
 ###

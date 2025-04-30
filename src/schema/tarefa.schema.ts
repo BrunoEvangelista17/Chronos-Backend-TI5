@@ -17,10 +17,10 @@ export class Task {
   @Prop({ type: Types.ObjectId, ref: 'Project', required: true })
   projeto_id: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: 'Usuario', required: true })
+  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   criada_por_id: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: 'Usuario' })
+  @Prop({ type: Types.ObjectId, ref: 'User' })
   aprovada_por_id: Types.ObjectId;
 }
 

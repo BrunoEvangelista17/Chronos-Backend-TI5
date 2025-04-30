@@ -4,44 +4,75 @@ import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from 'src/schema/usuario.schema';
+import { Project } from 'src/schema/projeto.schema';
+import { Task } from 'src/schema/tarefa.schema';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectModel(User.name)
-    private readonly userModel: Model<User>,
+    @InjectModel(User.name) private userModel: Model<User>,
+    @InjectModel(Project.name) private projectModel: Model<Project>,
+    @InjectModel(Task.name) private taskModel: Model<Task>,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
-    const createdUser = new this.userModel(createUserDto);
-    return createdUser.save();
+  async create(createUserDto: CreateUserDto) {
+    const user = new this.userModel(createUserDto);
+    return await user.save();
   }
 
-  async findAll(): Promise<User[]> {
-    return this.userModel.find().exec();
+  async findAll() {
+    return this.userModel.find();
   }
 
-  async findOne(id: string): Promise<User> {
-    const user = await this.userModel.findById(id).exec();
-    if (!user)
-      throw new NotFoundException(`Usuário com ID ${id} não encontrado`);
+  async findOne(id: string) {
+    const user = await this.userModel.findById(id);
+    if (!user) throw new NotFoundException('Usuário não encontrado');
     return user;
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
-    const updated = await this.userModel
-      .findByIdAndUpdate(id, updateUserDto, {
-        new: true,
-      })
-      .exec();
-    if (!updated)
-      throw new NotFoundException(`Usuário com ID ${id} não encontrado`);
-    return updated;
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    return this.userModel.findByIdAndUpdate(id, updateUserDto, { new: true });
   }
 
-  async remove(id: string): Promise<void> {
-    const result = await this.userModel.findByIdAndDelete(id).exec();
-    if (!result)
-      throw new NotFoundException(`Usuário com ID ${id} não encontrado`);
+  async remove(id: string) {
+    return this.userModel.findByIdAndDelete(id);
+  }
+
+  async assignUserToProject(userId: string, projectId: string) {
+    const user = await this.userModel.findById(userId);
+    if (!user) throw new NotFoundException('Usuário não encontrado');
+
+    const project = await this.projectModel.findById(projectId);
+    if (!project) throw new NotFoundException('Projeto não encontrado');
+
+    const alreadyInProject = project.users?.some((u) => u.id === user.id);
+    if (!alreadyInProject) {
+      project.users = [
+        ...(project.users || []),
+        {
+          id: user.id,
+          nome: user.nome,
+          email: user.email,
+          papel: user.papel,
+        },
+      ];
+      await project.save();
+    }
+
+    // Atualizar tarefas criadas por esse usuário (opcional)
+    await this.taskModel.updateMany(
+      { criada_por_id: user.id },
+      { $set: { criada_por_nome: user.nome } }, // Exemplo de atualização
+    );
+
+    await this.taskModel.updateMany(
+      { aprovada_por_id: user.id },
+      { $set: { aprovada_por_nome: user.nome } },
+    );
+
+    return {
+      message:
+        'Usuário associado ao projeto com sucesso e registros atualizados',
+    };
   }
 }

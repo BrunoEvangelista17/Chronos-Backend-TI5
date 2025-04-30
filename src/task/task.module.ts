@@ -16,5 +16,9 @@ import { Task } from './entities/task.entity';
   ],
   controllers: [TaskController],
   providers: [TaskService],
+  exports: [
+    TaskService,
+    MongooseModule.forFeature([{ name: Task.name, schema: TaskSchema }]), // Export Mongoose model
+  ],
 })
 export class TaskModule {}

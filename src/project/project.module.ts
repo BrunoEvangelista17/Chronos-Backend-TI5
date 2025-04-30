@@ -15,5 +15,9 @@ import { Project, ProjectSchema } from 'src/schema/projeto.schema';
   ],
   controllers: [ProjectController],
   providers: [ProjectService],
+  exports: [
+    ProjectService,
+    MongooseModule.forFeature([{ name: Project.name, schema: ProjectSchema }]), // Export Mongoose model
+  ],
 })
 export class ProjectModule {}

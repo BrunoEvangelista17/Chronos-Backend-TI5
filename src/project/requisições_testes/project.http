@@ -34,4 +34,4 @@ Content-Type: application/json
 ###
 
 ### Deletar projeto
-DELETE http://localhost:3000/project/{{projectId}}
+DELETE http://localhost:3000/project/6810d6ca94c434a8d673442c

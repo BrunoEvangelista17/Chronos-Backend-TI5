@@ -6,8 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  HttpException,
-  HttpStatus,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -18,65 +16,35 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  async create(@Body() createUserDto: CreateUserDto) {
-    try {
-      const user = await this.userService.create(createUserDto);
-      return {
-        message: 'Usuário criado com sucesso',
-        data: user,
-      };
-    } catch (error) {
-      throw new HttpException(
-        'Erro ao criar usuário: ' + error.message,
-        HttpStatus.BAD_REQUEST,
-      );
-    }
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.userService.create(createUserDto);
   }
 
   @Get()
-  async findAll() {
-    const users = await this.userService.findAll();
-    return {
-      message: 'Lista de usuários',
-      data: users,
-    };
+  findAll() {
+    return this.userService.findAll();
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    try {
-      const user = await this.userService.findOne(id);
-      return {
-        message: `Usuário com id ${id} encontrado`,
-        data: user,
-      };
-    } catch (error) {
-      throw new HttpException(error.message, HttpStatus.NOT_FOUND);
-    }
+  findOne(@Param('id') id: string) {
+    return this.userService.findOne(id);
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    try {
-      const user = await this.userService.update(id, updateUserDto);
-      return {
-        message: `Usuário com id ${id} atualizado com sucesso`,
-        data: user,
-      };
-    } catch (error) {
-      throw new HttpException(error.message, HttpStatus.NOT_FOUND);
-    }
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.userService.update(id, updateUserDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
-    try {
-      await this.userService.remove(id);
-      return {
-        message: `Usuário com id ${id} removido com sucesso`,
-      };
-    } catch (error) {
-      throw new HttpException(error.message, HttpStatus.NOT_FOUND);
-    }
+  remove(@Param('id') id: string) {
+    return this.userService.remove(id);
+  }
+
+  @Post(':userId/assign-to-project/:projectId')
+  assignToProject(
+    @Param('userId') userId: string,
+    @Param('projectId') projectId: string,
+  ) {
+    return this.userService.assignUserToProject(userId, projectId);
   }
 }

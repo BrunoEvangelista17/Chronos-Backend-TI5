@@ -1,10 +1,16 @@
+// src/schema/tarefa.schema.ts
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
 
 export type TaskDocument = Task & Document;
 
 @Schema({ timestamps: true })
 export class Task {
+  // adiciona o campo id no schema, com default uuid e unique index
+  @Prop({ type: String, default: () => uuidv4(), unique: true })
+  id: string;
+
   @Prop({ required: true })
   titulo: string;
 
@@ -12,7 +18,7 @@ export class Task {
   descricao?: string;
 
   @Prop({ required: true, default: 'pending' })
-  status: string; // Ex: pending, doing, done
+  status: string;
 
   @Prop()
   dataInicio?: Date;
@@ -24,7 +30,7 @@ export class Task {
   dataConclusao?: Date;
 
   @Prop({ required: true })
-  prioridade: string; // Ex: baixa, média, alta
+  prioridade: string;
 
   @Prop({ required: true })
   complexidade: number;
@@ -38,7 +44,6 @@ export class Task {
   @Prop({ type: Types.ObjectId, ref: 'User' })
   aprovadaPor?: Types.ObjectId;
 
-  // Caso deseje armazenar todos os usuários atribuídos diretamente na tarefa
   @Prop([{ type: Types.ObjectId, ref: 'User' }])
   atribuicoes?: Types.ObjectId[];
 }

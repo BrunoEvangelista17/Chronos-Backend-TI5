@@ -7,12 +7,11 @@ Content-Type: application/json
   "descricao": "Develop JWT-based authentication for user login",
   "prioridade": "alta",
   "complexidade": 8,
-  "projeto": "507f1f77bcf86cd799439011",
-  "criadaPor": "507f191e810c19729de860ea",
+  "projeto": "6810d7b6bda0b83953c0261f",
+  "criadaPor": "68120b9e27268e6965f0714a",
   "dataInicio": "2025-05-01T09:00:00.000Z",
   "dataLimite": "2025-05-15T17:00:00.000Z",
-  "aprovadaPor": "507f191e810c19729de860eb",
-  "atribuicoes": ["507f191e810c19729de860ec", "507f191e810c19729de860ed"]
+  "atribuicoes": ["68120b9e27268e6965f0714a"]
 }
 
 ###
@@ -23,7 +22,7 @@ GET http://localhost:3000/tasks
 ###
 
 ### Buscar uma tarefa por ID
-GET http://localhost:3000/tasks/{{task_id}}
+GET http://localhost:3000/tasks/6818b2c67e143ce53e44cced
 
 ###
 
@@ -40,3 +39,8 @@ Content-Type: application/json
 
 ### Remover uma tarefa
 DELETE http://localhost:3000/tasks/{{task_id}}
+
+###
+
+### Get tasks of user
+GET http://localhost:3000/tasks/user/68120b9e27268e6965f0714a

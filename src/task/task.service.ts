@@ -24,70 +24,26 @@ export class TaskService {
   ) {}
 
   async create(createTaskDto: CreateTaskDto): Promise<Task> {
-    // Validate project existence
     const project = await this.projectModel
       .findById(createTaskDto.projeto)
       .exec();
-    if (!project) {
-      throw new NotFoundException('Projeto não encontrado');
-    }
+    if (!project) throw new NotFoundException('Projeto não encontrado');
 
-    // Validate creator existence
     const creator = await this.userService.findOne(createTaskDto.criadaPor);
-    if (!creator) {
-      throw new NotFoundException('Usuário criador não encontrado');
-    }
+    if (!creator) throw new NotFoundException('Usuário criador não encontrado');
 
-    // Validate approver existence (if provided)
     if (createTaskDto.aprovadaPor) {
       const approver = await this.userService.findOne(
         createTaskDto.aprovadaPor,
       );
-      if (!approver) {
+      if (!approver)
         throw new NotFoundException('Usuário aprovador não encontrado');
-      }
     }
 
-    // Explicitly exclude id
-    const { ...safeTaskDto } = createTaskDto;
-
-    // Create the task
     const task = new this.taskModel({
-      ...safeTaskDto,
+      ...createTaskDto,
     });
-    const savedTask = await task.save();
-
-    // Handle assignments (create TaskUser entries for atribuicoes)
-    if (createTaskDto.atribuicoes && createTaskDto.atribuicoes.length > 0) {
-      for (const userId of createTaskDto.atribuicoes) {
-        // Validate user existence
-        const user = await this.userService.findOne(userId);
-        if (!user) {
-          throw new NotFoundException(
-            `Usuário com ID ${userId} não encontrado`,
-          );
-        }
-
-        // Check if user is part of the project
-        const userInProject = project.users.some(
-          (u) => u.id.toString() === userId,
-        );
-        if (!userInProject) {
-          throw new BadRequestException(
-            `Usuário com ID ${userId} não faz parte do projeto`,
-          );
-        }
-
-        // Create TaskUser entry
-        await this.taskUserModel.create({
-          task_id: savedTask._id,
-          user_id: userId,
-          notificado_relacionada: false,
-        });
-      }
-    }
-
-    return savedTask;
+    return task.save();
   }
 
   async findAll(): Promise<Task[]> {
@@ -273,5 +229,23 @@ export class TaskService {
       .exec();
 
     return userTask;
+  }
+
+  async findByUser(userId: string): Promise<Task[]> {
+    // garante que usuário exista
+    const user = await this.userService.findOne(userId);
+    if (!user) throw new NotFoundException('Usuário não encontrado');
+
+    // retorna tarefas onde o usuário está atribuído (atribuicoes array) ou criou
+    return this.taskModel
+      .find({
+        $or: [
+          { criadaPor: userId },
+          { aprovadaPor: userId },
+          { atribuicoes: userId },
+        ],
+      })
+      .populate(['projeto', 'criadaPor', 'aprovadaPor'])
+      .exec();
   }
 }

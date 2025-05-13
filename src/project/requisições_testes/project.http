@@ -5,7 +5,7 @@ Content-Type: application/json
 {
   "nome": "Chronos",
   "descricao": "Sistema de gerenciamento ágil",
-  "data_inicio": "2025-05-01T00:00:00.000Z",
+  "dataInicio": "2025-05-01T00:00:00.000Z",
   "data_fim": "2025-12-31T00:00:00.000Z",
   "status": "ativo"
 }
@@ -18,7 +18,7 @@ GET http://localhost:3000/project
 ###
 
 ### Buscar projeto por ID
-GET http://localhost:3000/project/6810d6ca94c434a8d673442c
+GET http://localhost:3000/project/6810d7b6bda0b83953c0261f
 
 ###
 

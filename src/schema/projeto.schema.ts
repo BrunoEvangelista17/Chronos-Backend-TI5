@@ -11,7 +11,7 @@ export class Project extends Document {
   descricao: string;
 
   @Prop({ type: Date })
-  data_inicio: Date;
+  dataInicio: Date;
 
   @Prop({ type: Date })
   data_fim: Date;
@@ -44,8 +44,8 @@ export class Project extends Document {
         titulo: String,
         descricao: String,
         status: String,
-        data_inicio: Date,
-        data_limite: Date,
+        dataInicio: Date,
+        dataLimite: Date,
         complexidade: Number,
       },
     ],
@@ -56,8 +56,8 @@ export class Project extends Document {
     titulo: string;
     descricao: string;
     status: string;
-    data_inicio: Date;
-    data_limite: Date;
+    dataInicio: Date;
+    dataLimite: Date;
     complexidade: number;
   }[];
 }

@@ -40,10 +40,23 @@ export class TaskService {
         throw new NotFoundException('Usuário aprovador não encontrado');
     }
 
-    const task = new this.taskModel({
-      ...createTaskDto,
+    // Cria a task
+    const task = new this.taskModel({ ...createTaskDto });
+    const savedTask = await task.save();
+
+    // Adiciona a task ao projeto
+    project.tasks.push({
+      id: savedTask._id.toString(),
+      titulo: savedTask.titulo,
+      descricao: savedTask.descricao,
+      status: savedTask.status,
+      dataInicio: savedTask.dataInicio,
+      dataLimite: savedTask.dataLimite,
+      complexidade: savedTask.complexidade,
     });
-    return task.save();
+    await project.save();
+
+    return savedTask;
   }
 
   async findAll(): Promise<Task[]> {
@@ -247,5 +260,62 @@ export class TaskService {
       })
       .populate(['projeto', 'criadaPor', 'aprovadaPor'])
       .exec();
+  }
+
+  async getBurndown(projectId: string, startDate: string) {
+    const project = await this.projectModel.findById(projectId).exec();
+    if (!project) throw new NotFoundException('Projeto não encontrado');
+
+    const start = new Date(startDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const result: Array<{ date: string; pending: number }> = [];
+    for (let d = new Date(start); d <= today; d.setDate(d.getDate() + 1)) {
+      const dateStr = d.toISOString().split('T')[0];
+      const next = new Date(d);
+      next.setDate(next.getDate() + 1);
+
+      const pending = await this.taskModel
+        .countDocuments({
+          projeto: projectId,
+          status: { $ne: 'Concluída' },
+          createdAt: { $lte: next }, // tarefa criada até o dia atual
+        })
+        .exec();
+
+      result.push({ date: dateStr, pending });
+    }
+    return result;
+  }
+
+  async getProjection(projectId: string, startDate: string) {
+    const project = await this.projectModel.findById(projectId).exec();
+    if (!project) throw new NotFoundException('Projeto não encontrado');
+
+    const start = new Date(startDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const result: Array<{ date: string; pending: number }> = [];
+
+    for (let d = new Date(start); d <= today; d.setDate(d.getDate() + 1)) {
+      const currentDay = new Date(d);
+      currentDay.setHours(23, 59, 59, 999); // final do dia atual
+
+      const pending = await this.taskModel.countDocuments({
+        projeto: projectId,
+        status: { $ne: 'Concluída' },
+        dataInicio: { $lte: currentDay },
+        dataLimite: { $gte: d }, // ainda deve estar ativa ou futura
+      });
+
+      result.push({
+        date: d.toISOString().split('T')[0],
+        pending,
+      });
+    }
+
+    return result;
   }
 }

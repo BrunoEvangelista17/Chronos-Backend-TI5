@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -43,5 +44,21 @@ export class TaskController {
   @Get('user/:userId')
   async getTasksByUser(@Param('userId') userId: string) {
     return this.taskService.findByUser(userId);
+  }
+
+  @Get('burndown/:projectId')
+  async burndown(
+    @Param('projectId') projectId: string,
+    @Query('start') start: string,
+  ) {
+    return this.taskService.getBurndown(projectId, start);
+  }
+
+  @Get('projection/:projectId')
+  async projection(
+    @Param('projectId') projectId: string,
+    @Query('start') start: string,
+  ) {
+    return this.taskService.getProjection(projectId, start);
   }
 }

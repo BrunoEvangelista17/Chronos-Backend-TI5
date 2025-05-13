@@ -29,10 +29,10 @@ class ProjectTaskDto {
   status: string;
 
   @IsString()
-  data_inicio: string;
+  dataInicio: string;
 
   @IsString()
-  data_limite: string;
+  dataLimite: string;
 
   @IsOptional()
   complexidade?: number;
@@ -47,7 +47,7 @@ export class CreateProjectDto {
   descricao?: string;
 
   @IsString()
-  data_inicio: string;
+  dataInicio: string;
 
   @IsString()
   data_fim: string;

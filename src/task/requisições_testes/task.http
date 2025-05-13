@@ -10,7 +10,7 @@ Content-Type: application/json
   "projeto": "6810d7b6bda0b83953c0261f",
   "criadaPor": "68120b9e27268e6965f0714a",
   "dataInicio": "2025-05-01T09:00:00.000Z",
-  "dataLimite": "2025-05-15T17:00:00.000Z",
+  "dataLimite": "2025-05-10T17:00:00.000Z",
   "atribuicoes": ["68120b9e27268e6965f0714a"]
 }
 
@@ -44,3 +44,11 @@ DELETE http://localhost:3000/tasks/{{task_id}}
 
 ### Get tasks of user
 GET http://localhost:3000/tasks/user/68120b9e27268e6965f0714a
+
+###
+### Get Brundown of project
+GET http://localhost:3000/tasks/burndown/6810d7b6bda0b83953c0261f?start=2025-04-01
+
+### Get Projection of project
+GET http://localhost:3000/tasks/projection/6810d7b6bda0b83953c0261f?start=2025-05-01
+

@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "nome": "João da Silva",
-  "email": "texera@example.com",
+  "email": "txaaaaa@example.com",
   "senha_hash": "senhaSegura123",
   "foto_url": "https://example.com/foto.jpg",
   "papel": "Scrum Master",
@@ -16,7 +16,7 @@ Content-Type: application/json
 GET http://localhost:3000/users
 
 ### Buscar usuário por ID
-GET http://localhost:3000/users/{{userId}}
+GET http://localhost:3000/users/6823804ed7aa7e4e1e34de80
 
 ### Atualizar usuário
 PATCH http://localhost:3000/users/6812687a03f3a271c0b95dec

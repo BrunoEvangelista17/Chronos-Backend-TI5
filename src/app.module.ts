@@ -5,12 +5,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ProjectModule } from './project/project.module';
 import { TaskModule } from './task/task.module';
 import { UserModule } from './user/user.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      'mongodb+srv://brunoevangelistag15:ddMZrpdZovFXY8Lh@cluster0.db5jm.mongodb.net/',
-    ),
+    ConfigModule.forRoot(),
+    MongooseModule.forRoot(process.env.MONGODB_URI),
     ProjectModule,
     TaskModule,
     UserModule,

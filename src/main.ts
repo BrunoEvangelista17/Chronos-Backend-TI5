@@ -4,7 +4,13 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT ?? 3000);
+
+  // Enable CORS to allow requests from any origin
+  app.enableCors({
+    origin: '*', // Allows all origins
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS', // Allows all standard HTTP methods
+    credentials: true, // Optional: Allows cookies and credentials to be sent
+  });
 
   // Pipes
   app.useGlobalPipes(
@@ -14,6 +20,8 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+
+  await app.listen(process.env.PORT ?? 3000);
 }
 
 bootstrap();

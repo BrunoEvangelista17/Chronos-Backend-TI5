@@ -6,6 +6,8 @@ import { ProjectModule } from './project/project.module';
 import { TaskModule } from './task/task.module';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
+import { KafkaModule } from './kafka/kafka.module';
+import { TestConsumer } from './test.consumer';
 
 @Module({
   imports: [
@@ -14,8 +16,9 @@ import { ConfigModule } from '@nestjs/config';
     ProjectModule,
     TaskModule,
     UserModule,
+    KafkaModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, TestConsumer],
 })
 export class AppModule {}

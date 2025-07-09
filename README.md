@@ -157,8 +157,7 @@ npm run start:prod
 ---
 
 ## Modelo de Dados
-O modelo de dados utiliza coleções MongoDB, mapeadas via Mongoose. O diagrama de entidades (DER) está disponível em:
-![Modelo de Dados](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2025-1-ti5-6904100-chronos/blob/main/docs/imagens/der.png?raw=true)
+O modelo de dados utiliza coleções MongoDB, mapeadas via Mongoose. O diagrama de entidades (DER) está disponível na pasta src/scheema
 
 ### Principais Coleções
 - **Project**: `{ id, name, description, members: [{ userId, role }], createdAt, updatedAt }`

@@ -34,7 +34,7 @@ O modelo de dados é baseado em coleções MongoDB, mapeadas via Mongoose. As pr
 - **User**: Contém dados de usuários, incluindo papéis (Scrum Master, Product Owner, Developer) e métricas de desempenho.
 - **Notification**: Registra notificações enviadas aos usuários (prazos, atualizações, tarefas dependentes).
 
-![Modelo de Dados]([imagens/DER.png](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2025-1-ti5-6904100-chronos/blob/main/docs/imagens/der.png?raw=true))
+![Modelo de Dados](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2025-1-ti5-6904100-chronos/blob/main/docs/imagens/DER.png?raw=true)
 
 ---
 

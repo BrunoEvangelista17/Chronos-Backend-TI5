@@ -24,7 +24,7 @@ Este README detalha a arquitetura, tecnologias, funcionalidades, endpoints da AP
 O backend segue uma arquitetura modular baseada em microserviços, com comunicação assíncrona para notificações e eventos. A estrutura é organizada em módulos (Auth, User, Task, Project, Meeting, Notification), utilizando injeção de dependências para maior escalabilidade e manutenção.
 
 ### Diagrama de Componentes
-![Diagrama de Componentes](imagens/Compomentes.jpg)
+![Diagrama de Componentes](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2025-1-ti5-6904100-chronos/blob/main/docs/imagens/Compomentes.jpg?raw=true)
 
 ### Modelo de Dados
 O modelo de dados é baseado em coleções MongoDB, mapeadas via Mongoose. As principais entidades incluem:

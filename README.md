@@ -1,6 +1,4 @@
-Aqui está um README focado exclusivamente no **backend** do projeto **Chronos**, com base nas informações fornecidas. O README é claro, conciso e segue uma estrutura profissional, destacando a arquitetura, tecnologias, funcionalidades, endpoints da API, modelo de dados, e instruções para configuração e execução. Ele é projetado para ser incluído em um repositório GitHub dedicado ao backend do projeto.
 
-```markdown
 # Chronos - Backend
 
 ## Visão Geral

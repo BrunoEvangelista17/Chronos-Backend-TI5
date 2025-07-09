@@ -187,15 +187,3 @@ Para dúvidas ou sugestões, entre em contato com a equipe:
 ## Referências
 - ELMASRI, Ramez; NAVATHE, Sham. **Sistemas de banco de dados**. 7. ed. São Paulo: Pearson, c2019. E-book. ISBN 9788543025001.
 - SUTHERLAND, Jeffrey Victor. **Scrum: a arte de fazer o dobro do trabalho na metade do tempo**. 2. ed. rev. São Paulo, SP: Leya, 2016. ISBN 9788544104514.
-
-```
-
-### Notas:
-- **Foco no Backend**: O README foi estruturado para detalhar exclusivamente o backend do Chronos, com base nas informações fornecidas (tecnologias, requisitos, modelagem, etc.).
-- **Endpoints**: Os endpoints listados são exemplos baseados nos requisitos funcionais (RF001 a RF016). Ajuste-os conforme a implementação real do projeto.
-- **Modelo de Dados**: As coleções foram descritas com base no contexto fornecido. Substitua o link do diagrama (`imagens/DER.png`) pelo caminho real no repositório.
-- **Instruções de Configuração**: Incluí instruções genéricas para configuração e execução. Ajuste as variáveis de ambiente e pré-requisitos conforme a implementação específica.
-- **Artefatos Visuais**: Os links para diagramas (Componentes e DER) foram mantidos como placeholders (`imagens/Compomentes.jpg` e `imagens/DER.png`). Atualize com os caminhos corretos no repositório.
-- **Contribuições de Bruno**: Destaquei as contribuições mencionadas no histórico de revisões (notificações, Kanban, relatórios, reuniões) para reforçar seu papel no backend.
-
-Se precisar de ajustes, como adicionar mais detalhes sobre um módulo específico, incluir mais endpoints, ou integrar com outras seções do projeto, é só avisar!

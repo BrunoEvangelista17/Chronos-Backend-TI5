@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/schema/usuario.schema';
 import { ProjectModule } from 'src/project/project.module';
 import { TaskModule } from 'src/task/task.module';
+import { FirebaseAuthModule } from '../../auth/firebase-auth.module';
 
 @Module({
   imports: [
@@ -14,11 +15,12 @@ import { TaskModule } from 'src/task/task.module';
         schema: UserSchema,
       },
     ]),
-    ProjectModule,
+    forwardRef(() => ProjectModule),
     forwardRef(() => TaskModule),
+    FirebaseAuthModule
   ],
   controllers: [UserController],
   providers: [UserService], // Remove ProjectModule, TaskModule
   exports: [UserService],
 })
-export class UserModule {}
+export class UserModule { }

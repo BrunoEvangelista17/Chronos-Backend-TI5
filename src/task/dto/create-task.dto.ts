@@ -1,12 +1,13 @@
 import {
   IsString,
   IsNotEmpty,
-  IsNumber,
   IsMongoId,
   IsDateString,
   IsOptional,
   IsArray,
+  IsEnum,
 } from 'class-validator';
+import { Complexidade } from 'src/types/types';
 
 export class CreateTaskDto {
   @IsString()
@@ -21,17 +22,16 @@ export class CreateTaskDto {
   @IsNotEmpty()
   prioridade: string;
 
-  @IsNumber()
-  @IsNotEmpty()
-  complexidade: number;
+  @IsEnum(Complexidade)
+  complexidade: Complexidade;
 
   @IsMongoId()
   @IsNotEmpty()
   projeto: string;
 
-  @IsMongoId()
+  @IsString()
   @IsNotEmpty()
-  criadaPor: string;
+  status: string;
 
   @IsDateString()
   @IsOptional()
@@ -41,6 +41,10 @@ export class CreateTaskDto {
   @IsOptional()
   dataLimite?: string;
 
+  @IsDateString()
+  @IsOptional()
+  dataConclusao?: string;
+
   @IsMongoId()
   @IsOptional()
   aprovadaPor?: string;
@@ -49,4 +53,10 @@ export class CreateTaskDto {
   @IsMongoId({ each: true })
   @IsOptional()
   atribuicoes?: string[];
+
+  @IsOptional()
+  @IsArray()
+  @IsMongoId({ each: true })
+  tarefasAnteriores?: string[];
+
 }

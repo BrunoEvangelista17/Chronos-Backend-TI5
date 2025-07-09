@@ -1,7 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 export type ProjectDocument = Project & Document;
+
 @Schema()
 export class Project extends Document {
   @Prop({ required: true })
@@ -37,29 +38,9 @@ export class Project extends Document {
     papel: string;
   }[];
 
-  @Prop({
-    type: [
-      {
-        id: String,
-        titulo: String,
-        descricao: String,
-        status: String,
-        dataInicio: Date,
-        dataLimite: Date,
-        complexidade: Number,
-      },
-    ],
-    default: [],
-  })
-  tasks: {
-    id: string;
-    titulo: string;
-    descricao: string;
-    status: string;
-    dataInicio: Date;
-    dataLimite: Date;
-    complexidade: number;
-  }[];
+  // CORREÇÃO AQUI: O array 'tasks' agora armazena apenas ObjectIds que referenciam a Task
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Task' }], default: [] })
+  tasks: Types.ObjectId[]; // Apenas um array de IDs de tarefas
 }
 
 export const ProjectSchema = SchemaFactory.createForClass(Project);

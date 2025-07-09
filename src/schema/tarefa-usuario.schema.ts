@@ -6,19 +6,28 @@ export type TaskUserDocument = TaskUser & Document;
 @Schema({ timestamps: true })
 export class TaskUser {
   @Prop({ type: Types.ObjectId, ref: 'Task', required: true })
-  task: Types.ObjectId;
+  task_id: Types.ObjectId;
 
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
-  user: Types.ObjectId;
+  user_id: Types.ObjectId;
+
+  @Prop({ default: false })
+  notificado_relacionada: boolean;
 
   @Prop()
-  tempoGastoHoras?: number;
+  concluida_em?: Date;
 
   @Prop()
-  concluidaEm?: Date;
+  tempo_gasto_horas?: number;
 
-  @Prop({ required: true, default: false })
-  notificadoRelacionada: boolean;
+  @Prop()
+  avaliacao_comentario?: string;
+
+  @Prop()
+  avaliacao_nota?: number;
+
+  @Prop()
+  avaliacao_codigo?: string;
 }
 
 export const TaskUserSchema = SchemaFactory.createForClass(TaskUser);

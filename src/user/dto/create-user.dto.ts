@@ -5,6 +5,7 @@ import {
   IsBoolean,
   IsOptional,
   IsNumber,
+  isNotEmpty,
 } from 'class-validator';
 
 export class CreateUserDto {
@@ -23,14 +24,13 @@ export class CreateUserDto {
   @IsString()
   foto_url?: string;
 
-  @IsString()
-  @IsNotEmpty()
-  papel: string; // Ex: 'Scrum Master', 'PO', 'Dev'
-
   @IsBoolean()
   ativo: boolean;
 
   @IsNumber()
   @IsOptional()
   score?: number;
+
+  @IsString()
+  firebaseUid: string;
 }

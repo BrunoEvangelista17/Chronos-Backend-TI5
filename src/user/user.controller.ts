@@ -7,14 +7,29 @@ import {
   Param,
   Patch,
   Delete,
+  UseGuards,
+  Req,
+  NotFoundException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { AssignUserToProjectDto } from './dto/assign-user-to-project.dto';
+import { FirebaseAuthGuard } from 'auth/firebase-auth.guard';
 
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
+
+  @Get('me')
+  @UseGuards(FirebaseAuthGuard)
+  async getMyProfile(@Req() req: any) {
+    const userId = req.user?._id;
+    if (!userId) {
+      throw new NotFoundException('Usuário autenticado não encontrado.');
+    }
+    return this.userService.getMyProfile(userId.toString());
+  }
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
@@ -36,6 +51,15 @@ export class UserController {
     return this.userService.update(id, updateUserDto);
   }
 
+  @Patch('by-firebase/:firebaseUid')
+  @UseGuards(FirebaseAuthGuard)
+  updateByFirebaseUid(
+    @Param('firebaseUid') firebaseUid: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    return this.userService.updateByFirebaseUid(firebaseUid, updateUserDto);
+  }
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(id);
@@ -45,7 +69,9 @@ export class UserController {
   assignToProject(
     @Param('userId') userId: string,
     @Param('projectId') projectId: string,
+    @Body() assignUserToProjectDto: AssignUserToProjectDto,
   ) {
-    return this.userService.assignUserToProject(userId, projectId);
+    return this.userService.assignUserToProject(userId, projectId, assignUserToProjectDto.papel);
   }
+
 }

@@ -6,8 +6,15 @@ import { ProjectModule } from './project/project.module';
 import { TaskModule } from './task/task.module';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
+import { FirebaseAuthModule } from 'auth/firebase-auth.module';
 import { KafkaModule } from './kafka/kafka.module';
 import { TestConsumer } from './test.consumer';
+import { GatewayModule } from './gateway/gateway.module';
+// import { KafkaModule } from './kafka/kafka.module';
+// import { TestConsumer } from './test.consumer';
+import { MeetingModule } from './meetings/meetings.module';
+import { NotificationsModule } from './notifications/notifications.module';
+import { KanbanModule } from './kanban/kanban.module';
 
 @Module({
   imports: [
@@ -16,7 +23,13 @@ import { TestConsumer } from './test.consumer';
     ProjectModule,
     TaskModule,
     UserModule,
+    FirebaseAuthModule,
     KafkaModule,
+    GatewayModule,
+    MeetingModule,
+    NotificationsModule,
+    KanbanModule,
+    //KafkaModule,
   ],
   controllers: [AppController],
   providers: [AppService, TestConsumer],

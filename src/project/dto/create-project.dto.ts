@@ -1,5 +1,12 @@
-import { IsString, IsOptional, IsArray, ValidateNested } from 'class-validator';
+import {
+  IsString,
+  IsOptional,
+  IsArray,
+  ValidateNested,
+  IsEnum,
+} from 'class-validator';
 import { Type } from 'class-transformer';
+import { Complexidade } from 'src/types/types';
 
 class ProjectUserDto {
   @IsString()
@@ -34,8 +41,8 @@ class ProjectTaskDto {
   @IsString()
   dataLimite: string;
 
-  @IsOptional()
-  complexidade?: number;
+  @IsEnum(Complexidade)
+  complexidade: Complexidade;
 }
 
 export class CreateProjectDto {
